@@ -8,8 +8,6 @@ This package is designed to deterministically normalize input into a defined str
 
 ## Development
 
-See [docs/API.md](docs/API.md) for detailed API References
-
 ### Environment
 
 - Developed using Node.js `v18.14.2`

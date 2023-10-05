@@ -19,7 +19,7 @@ test-debug:		test-unit-debug
 test-unit:		build
 	npx mocha ./tests/unit
 test-unit-debug:	build
-	LOG_LEVEL=silly npx mocha ./tests/unit
+	LOG_LEVEL=trace npx mocha ./tests/unit
 
 
 #

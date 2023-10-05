@@ -1,5 +1,5 @@
 import { Logger }			from '@whi/weblogger';
-const log				= new Logger("unit-test", (import.meta.url === import.meta.main) && process.env.LOG_LEVEL );
+const log				= new Logger("unit-test", process.env.LOG_LEVEL );
 
 import { expect }			from 'chai';
 import {
@@ -19,7 +19,7 @@ const PostStruct = {
 };
 
 function basic_tests () {
-    it("should successfully create post", async () => {
+    it("should restructure an object", async () => {
 	const post			= intoStruct( {
 	    "message":		"Hello, world!",
 	    "tags":		[ "greeting" ],

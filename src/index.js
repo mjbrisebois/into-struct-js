@@ -1,6 +1,3 @@
-import { Logger }			from '@whi/weblogger';
-const log				= new Logger("into_struct", (import.meta.url === import.meta.main) && process.env.LOG_LEVEL );
-
 import repr				from '@whi/repr';
 
 
@@ -285,11 +282,9 @@ export function intoStruct ( target, struct, key = null ) {
     }
     // make target into expected struct
     else {
-	log.trace("Invoking struct constructor '%s' for target:", struct.name, target );
 	try {
 	    return new struct( target );
 	} catch (err) {
-	    log.error("%s constructor failed with:", struct.name, err );
 	    throw new TypeError(`Struct expects '${key}' to be a <${struct.name}> but constructor failed with: ${String(err)}`);
 	}
     }
