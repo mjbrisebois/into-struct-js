@@ -3,12 +3,13 @@ const log				= new Logger("unit-test", process.env.LOG_LEVEL );
 
 import { expect }			from 'chai';
 import {
-    OptionType, None,
+    AnyType, OptionType, None,
     VecType, MapType,
     intoStruct,
 }					from '../../src/index.js';
 
 const PostStruct = {
+    "anything":			AnyType,
     "message":			String,
     "tags":			VecType( String ),
     "ratings":			MapType( String, Number ),
@@ -21,6 +22,7 @@ const PostStruct = {
 function basic_tests () {
     it("should restructure an object", async () => {
 	const post			= intoStruct( {
+	    "anything":		new RegExp(".*"),
 	    "message":		"Hello, world!",
 	    "tags":		[ "greeting" ],
 	    "ratings": {
@@ -32,6 +34,7 @@ function basic_tests () {
 	    "metadata":		{},
 	}, PostStruct );
 
+	expect( post.anything		).to.be.a("RegExp");
 	expect( post.message		).to.be.a("string");
 	expect( post.tags		).to.be.a("array");
 	expect( post.ratings		).to.be.a("object");

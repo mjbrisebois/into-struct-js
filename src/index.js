@@ -1,6 +1,8 @@
 import repr				from '@whi/repr';
 
 
+export const AnyType			= Symbol();
+
 export class OptionStruct {
     constructor ( type ) {
 	this.inner_type			= type;
@@ -125,6 +127,9 @@ export function intoStruct ( target, struct, key = null ) {
     //   3. Are we handling special types (eg. Option, Vec, Map)
     //   4. Are we handling a leaf
     //
+
+    if ( struct === AnyType )
+	return target
 
     // Handle struct === null
     if ( struct === null ) {
