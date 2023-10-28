@@ -1,7 +1,7 @@
 import repr				from '@whi/repr';
 
 
-export const AnyType			= Symbol();
+export const AnyType			= Symbol.for("__INTO_STRUCT__.AnyType");
 
 export class OptionStruct {
     constructor ( type ) {
