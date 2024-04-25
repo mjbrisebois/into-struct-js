@@ -1,5 +1,9 @@
 import repr				from '@whi/repr';
 
+import {
+    in_heritage,
+}					from './utils.js';
+
 
 export const AnyType			= Symbol.for("__INTO_STRUCT__.AnyType");
 
@@ -81,7 +85,7 @@ export class EnumStruct {
 	// TODO: add check here for non-primitive types and throw error if they didn't supply a
 	// function for matching types.
 
-	if ( this.allowed_types.find( t => t instanceof OptionStruct ) )
+	if ( this.allowed_types.find( t => in_heritage( t, "OptionStruct" ) ) )
 	    throw new TypeError(`It doesn't make sense to have an Option type in an Enum; just allow a null type`);
     }
 
@@ -183,7 +187,7 @@ export function intoStruct ( target, struct, key = null ) {
 	}
 
 	// handle None
-	if ( type instanceof None ) {
+	if ( in_heritage( type, "None" ) ) {
 	    if ( target !== null )
 		typeError( key, target, type.constructor );
 
@@ -191,7 +195,7 @@ export function intoStruct ( target, struct, key = null ) {
 	}
 
 	// handle Option<type>
-	if ( type instanceof OptionStruct ) {
+	if ( in_heritage( type, "OptionStruct" ) ) {
 	    if ( target === null || target === undefined)
 		return null;
 
@@ -199,7 +203,7 @@ export function intoStruct ( target, struct, key = null ) {
 	}
 
 	// handle Vec<type>
-	if ( type instanceof VecStruct ) {
+	if ( in_heritage( type, "VecStruct" ) ) {
 	    if ( !Array.isArray( target ) )
 		typeError( key, target, type.constructor );
 
@@ -214,7 +218,7 @@ export function intoStruct ( target, struct, key = null ) {
 	}
 
 	// handle Map<key, type>
-	if ( type instanceof MapStruct ) {
+	if ( in_heritage( type, "MapStruct" ) ) {
 	    const key_type		= type.keyType();
 	    const value_type		= type.valueType();
 
@@ -246,7 +250,7 @@ export function intoStruct ( target, struct, key = null ) {
 	}
 
 	// handle Enum::<type>
-	if ( type instanceof EnumStruct ) {
+	if ( in_heritage( type, "EnumStruct" ) ) {
 	    const inner_type		= type.matchType( target );
 
 	    if ( inner_type === null )
@@ -282,7 +286,7 @@ export function intoStruct ( target, struct, key = null ) {
 	return target.valueOf();
     }
     // handle target already being the expected struct
-    else if ( target instanceof struct && target.constructor.name === struct.name ) {
+    else if ( (target instanceof struct || in_heritage( target, struct.name )) && target.constructor.name === struct.name ) {
 	return target;
     }
     // make target into expected struct
