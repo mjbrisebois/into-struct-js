@@ -1,6 +1,6 @@
 {
   "name": "@whi/into-struct",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Validate and/or convert input based on a given struct definition",
   "type": "module",
   "main": "src/index.js",
