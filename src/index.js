@@ -271,16 +271,15 @@ export function intoStruct ( target, struct, key = null ) {
     if ( !struct.prototype )
 	throw new TypeError(`Struct definition contains non-callable value at key '${key}': ${repr(struct)}`);
 
-    // target is a primitive value
-    if ( typeof target !== "object" ) {
-	if ( typeof target !== struct.name.toLowerCase() )
-	    typeError( key, target, struct );
-
-	return target;
-    }
     // handle primitive structs in object form
-    else if ( [ String, Number, Boolean ].includes( struct ) ) {
-	if ( !(target instanceof struct ) )
+    if ( [ String, Number, Boolean ].includes( struct ) ) {
+        // target is a primitive value
+        if ( typeof target !== "object" ) {
+            if ( typeof target !== struct.name.toLowerCase() )
+	        typeError( key, target, struct );
+            return target;
+        }
+	else if ( !(target instanceof struct ) )
 	    typeError( key, target, struct );
 
 	return target.valueOf();
